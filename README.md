@@ -9,6 +9,9 @@ Goals:
 3. Investigate incremental graph mining and learning techniques such as graph sketches, incremental grouping, incremental representation learning and incremental frequent pattern mining
 4. Application of graph stream analytics to be able to perform root cause analysis and anomaly detection
 
+Implemetation details:
+Please follow the overleaf link for documentation and implementation details.
+https://www.overleaf.com/read/vdkfhcdmgdfp
 Project Organization
 ------------
 
