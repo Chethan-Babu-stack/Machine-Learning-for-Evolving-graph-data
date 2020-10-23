@@ -35,8 +35,21 @@ def create_pos_variable(df, m):
          
     return pos
 
+# function to create a node size list dependent on degree 
+def node_size_degree(graph):
+    
+    # calculate degree of each node and save as dictionary
+    degree = dict(graph.degree())
+
+    # create a list with node sizes by multiplying the node degree with 1.5 for each node
+    node_size_list = []
+    for h in degree.values():
+        node_size_list = node_size_list + [h * 1.5]
+    
+    return node_size_list
+
 # function to draw the nodes and edges with specific parameters
-def draw_nodes_and_edges(graph, pos, node_size, node_visibility, edge_visibility, ncolor='#F7A538', ecolor='#5EC4B7', ewidth = 2):
+def draw_nodes_and_edges(graph, pos, node_size, node_visibility, edge_visibility, ncolor='#FF6585', ecolor='#4B8BBE', ewidth = 2):
     
     # draw the nodes of graph on the map and set other parameters for layout     
 #    try:
@@ -91,4 +104,6 @@ def visualize_on_worldmap(dataframe, directionality=nx.Graph(), node_size=20, hu
 # vertices: dict(airports:count)
 # positions: list(list(airport, latitude, longitude))
 def show(temp, edges, positions):
-    visualize_on_worldmap(temp)
+    graph = create_graph_object(temp, nx.Graph())
+    node_size = node_size_degree(graph)
+    visualize_on_worldmap(temp, node_size = node_size)
