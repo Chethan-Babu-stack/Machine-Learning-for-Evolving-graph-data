@@ -103,7 +103,8 @@ def visualize_on_worldmap(dataframe, directionality=nx.Graph(), node_size=20, hu
 # edges: dataframe(origin, destination, count)
 # vertices: dict(airports:count)
 # positions: list(list(airport, latitude, longitude))
-def show(temp, edges, positions):
+#    show(temp, edges, positions)
+def show(temp):
     graph = create_graph_object(temp, nx.Graph())
     node_size = node_size_degree(graph)
     visualize_on_worldmap(temp, node_size = node_size)
