@@ -5,7 +5,7 @@ import networkx as nx
 from mpl_toolkits.basemap import Basemap
 import matplotlib.pyplot as plt
 import numpy as np
-
+import time
 
 # function to create graph object from dataframe using NetworkX
 def create_graph_object(df, directionality):
@@ -65,7 +65,7 @@ def draw_nodes_and_edges(graph, pos, node_size, node_visibility, edge_visibility
 
 #%% Function to draw network on the world map
 
-def visualize_on_worldmap(dataframe, directionality=nx.Graph(), node_size=20, hub_nr=0, node_visibility=0.8, edge_visibility=0.1):
+def visualize_on_worldmap(dataframe, directionality=nx.Graph(), node_size=20, hub_nr=0, node_visibility=0.8, edge_visibility=0.1,date="",video=0):
      
     # create graph object from dataframe
     graph = create_graph_object(dataframe, directionality)
@@ -76,6 +76,7 @@ def visualize_on_worldmap(dataframe, directionality=nx.Graph(), node_size=20, hu
 
     # draw mercator projection as background and set size
     plt.figure(figsize = (15,20))
+    plt.text(0.1,0.1,date,size=15,color="purple")
     m = Basemap(projection='merc',
                 llcrnrlon=-180,
                 llcrnrlat=-80,
@@ -97,14 +98,28 @@ def visualize_on_worldmap(dataframe, directionality=nx.Graph(), node_size=20, hu
     # draw the nodes and edges on the map and set other parameters for layout
     draw_nodes_and_edges(graph, pos, node_size, node_visibility, edge_visibility)
     
-    # show plot
-    plt.show()
+#    plt.text(0.55, 0.6, "spam", size=50, rotation=-25.,
+#         ha="right", va="top",
+#         bbox=dict(boxstyle="square",
+#                   ec=(1., 0.5, 0.5),
+#                   fc=(1., 0.8, 0.8),
+#                   )
+#         )
+    # Save images for video
+    if video == 1:
+        path = r'C:/Users/Chethan/Desktop/TUD/TUD Sem 3/screenshots/'
+        path = path + date + ".png"
+        plt.savefig(path,bbox_inches='tight')
+    else:
+        plt.show()
+    
+    plt.close()
 
 # edges: dataframe(origin, destination, count)
 # vertices: dict(airports:count)
 # positions: list(list(airport, latitude, longitude))
 #    show(temp, edges, positions)
-def show(temp):
+def show(temp,date,video):
     graph = create_graph_object(temp, nx.Graph())
     node_size = node_size_degree(graph)
-    visualize_on_worldmap(temp, node_size = node_size)
+    visualize_on_worldmap(temp, node_size = node_size,date=date,video=video)
