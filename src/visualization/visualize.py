@@ -1,21 +1,22 @@
 
-### VISUALIZE.PY
+# VISUALIZE.PY
 
 import networkx as nx
 from mpl_toolkits.basemap import Basemap
 import matplotlib.pyplot as plt
 import numpy as np
-import time
 
-# function to create graph object from dataframe using NetworkX
+import nx_altair as nxa
+
+# Function to create graph object from dataframe using NetworkX
 def create_graph_object(df, directionality):
     graph = nx.from_pandas_edgelist(df, source = 'origin', \
                                  target = 'destination', create_using = directionality)
-    print(graph)
+#    print(graph)
     return graph   
 
 
-# function to create variable pos, that contains the position of each node
+# Function to create variable pos, that contains the position of each node
 def create_pos_variable(df, m):
     
     # Assign the longitude to mx and the latitude to my
@@ -28,51 +29,43 @@ def create_pos_variable(df, m):
          pos[elem] = (mx[count], my[count])
 
     mx, my = m(df['longitude_2'].values, df['latitude_2'].values)
-#    print(mx)
-#    pos = {}
+
     for count, elem in enumerate (df['destination']):
          pos[elem] = (mx[count], my[count])
          
     return pos
 
-# function to create a node size list dependent on degree 
+# Function to create a node size list dependent on degree 
 def node_size_degree(graph):
     
-    # calculate degree of each node and save as dictionary
+    # Calculate degree of each node and save as dictionary
     degree = dict(graph.degree())
 
-    # create a list with node sizes by multiplying the node degree with 1.5 for each node
+    # Create a list with node sizes by multiplying the node degree with 1.5 for each node
     node_size_list = []
     for h in degree.values():
         node_size_list = node_size_list + [h * 1.5]
     
     return node_size_list
 
-# function to draw the nodes and edges with specific parameters
+# Function to draw the nodes and edges with specific parameters
 def draw_nodes_and_edges(graph, pos, node_size, node_visibility, edge_visibility, ncolor='#FF6585', ecolor='#4B8BBE', ewidth = 2):
     
     # draw the nodes of graph on the map and set other parameters for layout     
-#    try:
-    nx.draw_networkx_nodes(graph, pos, node_size = node_size, node_color = ncolor, alpha = node_visibility)
-#    except Exception as err: 
-#        pass                 
+    nx.draw_networkx_nodes(graph, pos, node_size = node_size, node_color = ncolor, alpha = node_visibility)               
     # draw the edges of graph on the map and set other parameters for layout
-#    try:
     nx.draw_networkx_edges(graph, pos, edge_color = ecolor, width = ewidth, alpha = edge_visibility)
-#    except Exception as err: 
-#        pass
-    
 
-#%% Function to draw network on the world map
+# Function to draw network on the world map
 
-def visualize_on_worldmap(dataframe, directionality=nx.Graph(), node_size=20, hub_nr=0, node_visibility=0.8, edge_visibility=0.1,date="",video=0):
+def visualize_on_worldmap(dataframe, directionality=nx.MultiGraph(), node_size=20, hub_nr=0, node_visibility=0.8, edge_visibility=0.1,date="",video=0):
      
+
     # create graph object from dataframe
-    graph = create_graph_object(dataframe, directionality)
-    
+    graph = create_graph_object(dataframe, directionality) 
     # print graph info
     graph_info = nx.info(graph)
-    print(graph_info)
+#    print(graph_info)
 
     # draw mercator projection as background and set size
     plt.figure(figsize = (15,20))
@@ -98,13 +91,6 @@ def visualize_on_worldmap(dataframe, directionality=nx.Graph(), node_size=20, hu
     # draw the nodes and edges on the map and set other parameters for layout
     draw_nodes_and_edges(graph, pos, node_size, node_visibility, edge_visibility)
     
-#    plt.text(0.55, 0.6, "spam", size=50, rotation=-25.,
-#         ha="right", va="top",
-#         bbox=dict(boxstyle="square",
-#                   ec=(1., 0.5, 0.5),
-#                   fc=(1., 0.8, 0.8),
-#                   )
-#         )
     # Save images for video
     if video == 1:
         path = r'C:/Users/Chethan/Desktop/TUD/TUD Sem 3/screenshots/'
@@ -115,11 +101,7 @@ def visualize_on_worldmap(dataframe, directionality=nx.Graph(), node_size=20, hu
     
     plt.close()
 
-# edges: dataframe(origin, destination, count)
-# vertices: dict(airports:count)
-# positions: list(list(airport, latitude, longitude))
-#    show(temp, edges, positions)
 def show(temp,date,video):
-    graph = create_graph_object(temp, nx.Graph())
+    graph = create_graph_object(temp, nx.MultiGraph())
     node_size = node_size_degree(graph)
     visualize_on_worldmap(temp, node_size = node_size,date=date,video=video)
