@@ -52,19 +52,13 @@ def graph_with_date():
     path = r'C:/Users/Chethan/Desktop/TUD/TUD Sem 3/Research Project/DataSet/' # use your path
     all_files = glob.glob(path + "*" + d + "*.csv")
 
-#    print(all_files)
-    
-    # Will be use later
     li = [] 
     for filename in all_files:
         df = pd.read_csv(filename, index_col=None, header=0)
         li.append(df)
         
     df = df.dropna()
-#    dates = list(dict.fromkeys(df["day"]))
-#    vis_date = "2020-04-01 00:00:00+00:00"
     input_date = input_date[0:4] + "-" + input_date[4:6] + "-" + input_date[6:] + " 00:00:00+00:00"
-#    print(input_date[0:11])
     temp = df[df["day"] == input_date]
     v.show(temp,input_date[0:11],video=0)
     
