@@ -17,8 +17,8 @@ https://www.overleaf.com/3238164189gcjmptsvrnvr
 
 Video:
 ------------
-Visualization of node-link representation of airports and connecting flights respectively for the month of March 2020.
-https://youtu.be/mSkisQiZaLA
+Visualization of node-link representation of airports and connecting flights for the dataset of flights connectivity from 1st January 2019 till 31st October 2020
+https://youtu.be/GgUkT-8h_UA
 
 
 
