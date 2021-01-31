@@ -2,12 +2,15 @@ Machine Learning for evolving graph data
 ==============================
 Research is mostly restricted to static graphs, although most graphs change considerably over time. We need to compute embeddings that encode the temporal information - but representation learning for temporal graphs is largely unexplored. A machine could learn a temporal graph effectively only when it considers both the spatial topological structure of the nodes in a graph and change of network over time (temporal aspects). The nodes in the graph with certain relation in the past could not be ignored in the later stages of time. Temporal graph convolutional network (T-GCN) is a deep learning model which uses graph convolutional network (GCN) and gated recurrent unit (GRU) to capture spatial and temporal dependencies respectively. In this paper, TGCN is applied to OpenSky dataset and the results are compared against the baseline models. 
 
-Goals:
+Motivation:
 ------------
-1. Integration and research on foundations for temporal graphs and representation learning.
-2. Build foundations of a graph streaming system that integrates methods for stream-based graph mining and learning
-3. Investigate incremental graph mining and learning techniques such as graph sketches, incremental grouping, incremental representation learning and incremental frequent pattern mining
-4. Application of graph stream analytics to be able to perform root cause analysis and anomaly detection
+In the field of representation learning for graphs, research is mostly restricted to static graphs. This leaves out valuable information as most graphs change considerably over time. To solve this problem, we need to compute embeddings that encode the temporal information. Temporal Graph Convolutional Networks (T-GCN) is one such deep learning technique to learn the spatio-temporal aspects of the dynamic graphs.
+Dataset:
+------------
+The connectivity of flights all over the world can be viewed as a dynamic graph. Due to COVID-19, there where huge changes in the amount of flights in the past year. One dataset which captures this trend is the OpenSky dataset available for the time period from January 2019 till today.
+Tasks:
+------------
+The research project consists of preparing the data and then analyzing plus visualizing it. First, several baseline time-series prediction approaches are evaluated before introducing graph-based techniques. The use case is to predict the number of flights between airports given their history (spatio-temporal analysis). This will be further enriched by additional data such as the COVID-19 cases per country.
 
 Implemetation details:
 ------------
@@ -28,10 +31,8 @@ Project Organization
     ├── Makefile           <- Makefile with commands like `make data` or `make train`
     ├── README.md          <- The top-level README for developers using this project.
     ├── data
-    │   ├── external       <- Data from third party sources.
-    │   ├── interim        <- Intermediate data that has been transformed.
     │   ├── processed      <- Adjacency matrix and flight count datasets.
-    │   └── raw            <- The original, immutable data dump.
+    │   └── raw            <- Download the dataset from OpenSky (https://zenodo.org/record/4419079#.YBcxqOj0lnI)
     │
     ├── docs               <- A default Sphinx project; see sphinx-doc.org for details
     │
@@ -56,12 +57,11 @@ Project Organization
     │   ├── data           <- Scripts to download or generate data
     │   │   └── make_dataset.py
     │   │
-    │   ├── features       <- Scripts to turn raw data into features for modeling
+    │   ├── features       <- Scripts to turn raw data into features for modeling (Code included in models -- > Baseline section)
     │   │   └── build_features.py
     │   │
     │   ├── models         <- Scripts to train models and then use trained models to make
     │   │   │                 predictions
-    │   │   ├── predict_model.py
     │   │   └── train_model.py <- Run this first for tgcn
     │   │
     │   └── visualization  <- Scripts to create exploratory and results oriented visualizations
