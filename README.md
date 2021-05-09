@@ -14,10 +14,6 @@ Tasks:
 ------------
 The research project consists of preparing the data and then analyzing plus visualizing it. First, several baseline time-series prediction approaches are evaluated before introducing graph-based techniques. The use case is to predict the number of flights between airports given their history (spatio-temporal analysis). This will be further enriched by additional data such as the COVID-19 cases per country.
 
-Implemetation details:
-------------
-Please follow the overleaf link for documentation and implementation details.
-https://www.overleaf.com/3238164189gcjmptsvrnvr
 
 Video:
 ------------
